@@ -1,0 +1,45 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: p2p-devops-test
+  namespace: p2p-devops-test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: p2p-devops-test
+  template:
+    metadata:
+      labels:
+        app: p2p-devops-test
+    spec:
+      containers:
+        - name: p2p-devops-test-pod
+          image: ghcr.io/draju1980/draju1980/p2p-devops-test:master
+          ports:
+            - containerPort: 3000
+          resources:
+            limits:
+              cpu: "512m"
+              memory: "512Mi"
+            requests:
+              cpu: "256m"
+              memory: "256Mi"
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 3000
+            initialDelaySeconds: 15
+            periodSeconds: 10
+            timeoutSeconds: 3
+            failureThreshold: 5
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 3000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 3
+            failureThreshold: 3
+

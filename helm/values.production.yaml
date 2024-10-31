@@ -1,0 +1,16 @@
+replicaCount: 3  # Scale for fault tolerance
+
+image:
+  tag: master
+
+service:
+  type: LoadBalancer  # Use LoadBalancer for external access
+
+resources:
+  requests:
+    cpu: "250m"
+    memory: "256Mi"
+  limits:
+    cpu: "500m"
+    memory: "512Mi"
+

@@ -1,0 +1,9 @@
+replicaCount: 1  # Minimal setup
+
+image:
+  tag: master
+
+service:
+  type: NodePort  # Expose the service for testing
+
+resources: {}

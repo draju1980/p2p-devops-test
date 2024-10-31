@@ -1,0 +1,4 @@
+apiVersion: v2
+name: p2p-devops-app
+description: A Helm chart for deploying p2p devops test application
+version: 0.1.0
