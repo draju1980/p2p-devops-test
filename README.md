@@ -54,7 +54,7 @@ Here’s a refined solution outline with a breakdown of each component and its r
 
 #### Production Helm Chart:
 
-* Configure the production environment for resilience and scalability, with:
+##### Configure the production environment for resilience and scalability, with:
 
 * Multiple replicas for fault tolerance.
 
@@ -62,7 +62,7 @@ Here’s a refined solution outline with a breakdown of each component and its r
 
 #### Staging Helm Chart:
 
-* Optimize for minimal resource usage while reflecting production configurations closely to maintain parity:
+##### Optimize for minimal resource usage while reflecting production configurations closely to maintain parity:
 
 * Limit replicas and resources as needed.
 
@@ -70,7 +70,7 @@ Here’s a refined solution outline with a breakdown of each component and its r
 
 ### 5. Monitoring and Health Checks
 
-* Readiness and Liveness Probes:
+#### Readiness and Liveness Probes:
 
 * Implement Kubernetes readiness and liveness probes in the Helm charts to ensure the application is healthy and ready, enabling Kubernetes to handle rolling updates or restarts if a pod becomes unhealthy.
 
