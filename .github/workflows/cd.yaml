@@ -1,0 +1,38 @@
+name: CD Pipeline
+
+on:
+  push:
+    branches:
+      - master  # Production
+      - stg     # Staging
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Install ArgoCD CLI
+        run: |
+          curl -sSL -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
+          chmod +x /usr/local/bin/argocd
+
+      - name: ArgoCD Login
+        env:
+          ARGOCD_SERVER: ${{ secrets.ARGOCD_SERVER }}
+          ARGOCD_USERNAME: admin
+          ARGOCD_PASSWORD: ${{ secrets.ARGOCD_PASSWORD }}
+        run: |
+          argocd login $ARGOCD_SERVER --insecure --username $ARGOCD_USERNAME --password $ARGOCD_PASSWORD
+
+      - name: Deploy Application to ArgoCD
+        run: |
+          if [[ "${{ github.ref }}" == "refs/heads/master" ]]; then
+            argocd app sync p2p-devops-test || \
+            argocd app create p2p-devops-test --file https://raw.githubusercontent.com/draju1980/p2p-devops-test/refs/heads/master/argocd/helm/prod-p2p-devops-app.yaml
+          elif [[ "${{ github.ref }}" == "refs/heads/stg" ]]; then
+            argocd app sync p2p-devops-test-stg || \
+            argocd app create p2p-devops-test-stg --file https://raw.githubusercontent.com/draju1980/p2p-devops-test/refs/heads/stg/argocd/helm/stg-p2p-devops-app.yaml
+          fi
+          
