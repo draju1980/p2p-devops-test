@@ -32,7 +32,7 @@ jobs:
             argocd app sync p2p-devops-test || \
             argocd app create p2p-devops-test --file https://raw.githubusercontent.com/draju1980/p2p-devops-test/refs/heads/master/argocd/helm/prod-p2p-devops-app.yaml
           elif [[ "${{ github.ref }}" == "refs/heads/stg" ]]; then
-            argocd app sync p2p-devops-test-stg || \
-            argocd app create p2p-devops-test-stg --file https://raw.githubusercontent.com/draju1980/p2p-devops-test/refs/heads/stg/argocd/helm/stg-p2p-devops-app.yaml
+            argocd app sync p2p-devops-test || \
+            argocd app create p2p-devops-test --file https://raw.githubusercontent.com/draju1980/p2p-devops-test/refs/heads/stg/argocd/helm/stg-p2p-devops-app.yaml
           fi
           
